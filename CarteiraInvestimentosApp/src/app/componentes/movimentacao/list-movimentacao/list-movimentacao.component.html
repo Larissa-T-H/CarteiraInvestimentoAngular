@@ -1,0 +1,77 @@
+<div class="container mt-3">
+    <!-- <button mat-raised-button color="warn" (click)="openDialog()">Adicionar Movimentação</button> -->
+  
+  <mat-form-field appearance="standard">
+    <mat-label>Filter</mat-label>
+    <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia" #input>
+  </mat-form-field>
+  
+  <div class="mat-elevation-z8">
+    <table mat-table [dataSource]="dataSource" matSort>
+  
+      <!-- ID Column -->
+      <ng-container matColumnDef="movimentacaoId">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Movimentacao </th>
+        <td mat-cell *matCellDef="let row ; let i = index"> {{i + 1}} </td>
+      </ng-container>
+  
+      <ng-container matColumnDef="valor">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Valor</th>
+        <td mat-cell *matCellDef="let row"> {{ row.valor | currency:'BRL' }} </td>
+      </ng-container>
+      <ng-container matColumnDef="unidades">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> unidades </th>
+        <td mat-cell *matCellDef="let row"> {{ row.unidades }} </td>
+      </ng-container>
+      <ng-container matColumnDef="dataMovimentacao">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Data</th>
+        <td mat-cell *matCellDef="let row"> {{row.dataMovimentacao | date}} </td>
+      </ng-container>
+      <ng-container matColumnDef="statusMovimentacaoId">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
+        <td mat-cell *matCellDef="let row"> {{row.statusMovimentacao.statusMovimentacaoNome}} </td>
+      </ng-container>
+      <ng-container matColumnDef="rendaVariavelid">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Renda Variavel </th>
+        <td mat-cell *matCellDef="let row"> <div *ngIf="row.rendaVariavelId">{{row.rendaVariavel.nomeDoPapel}}</div> </td>
+      </ng-container>
+      <ng-container matColumnDef="rendaFixaId">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Renda Fixa </th>
+        <td mat-cell *matCellDef="let row"> <div *ngIf="row.rendaFixaId > 0">{{row.rendaFixa.nomeRendaFixa}}</div> </td>
+      </ng-container>
+      <ng-container matColumnDef="tesouroDiretoId">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Tesouro Direto </th>
+        <td mat-cell *matCellDef="let row"> <div *ngIf="row.tesouroDiretoId > 0">{{row.tesouroDireto.indexadorRendimentos.indexadorRendimentosNome}}
+          {{row.tesouroDireto.banco.bancoNome}} {{row.tesouroDireto.banco.bancoNome}}  {{row.tesouroDireto.rentabilidade | percent }}
+
+        </div> </td>
+      </ng-container>
+      <ng-container matColumnDef="poupancaId">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Poupanca </th>
+        <td mat-cell *matCellDef="let row" > <div *ngIf="row.poupancaId > 0">{{row.poupanca.banco.bancoNome}}</div>  </td>
+      </ng-container>
+      <ng-container matColumnDef="action"> 
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Ações </th>
+        <td mat-cell *matCellDef="let row">
+        <button mat-icon-button color="primary" (click)="editarPoupanca(row)">
+            <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button color="warn" (click)="apagarPoupanca(row.movimentacaoId)">
+            <mat-icon>delete</mat-icon>
+        </button>
+        </td>
+      </ng-container>
+  
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  
+      <!-- Row shown when there is no matching data. -->
+      <tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell" colspan="4">Nenhuma dado encontrado "{{input.value}}"</td>
+      </tr>
+    </table>
+  
+    <mat-paginator [pageSizeOptions]="[  25, 50, 100]" aria-label="Select page of users"></mat-paginator>
+  </div>
+  </div>
+  

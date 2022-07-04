@@ -1,0 +1,62 @@
+<!-- <div class="container">
+    <mat-form-field appearance="outline">
+        <mat-label>Tela</mat-label>
+        <mat-select name="food" #select>
+            <mat-option label="--select something --"></mat-option>
+            <mat-option value="1">Login</mat-option>
+            <mat-option value="2">Renda Variavel</mat-option>
+            <mat-option value="3">Tesouro Direto</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <div class="container" *ngIf="select.value === '1'">
+            <app-list-login></app-list-login>
+      </div>
+       <div class="container" *ngIf="select.value === '2'">
+            <app-list-renda-variavel></app-list-renda-variavel>
+      </div>
+      <div class="container" *ngIf="select.value === '3'">
+        <app-list-tesouro-direto></app-list-tesouro-direto>
+  </div>
+  <canvas #graf>{{graf}}</canvas>
+</div> -->
+
+<div class="container">
+  <div class="row col-md-12">
+  <mat-card class="col-md-12">
+   <h2> Total em Carteira {{ carteira.valorTotalCarteira | currency: 'BRL'}}</h2>
+    <div *ngIf="carteira.rendimentoDaCarteira >= 0">
+      <h3>Desde que você começou a investir sua carteira rendeu {{ carteira.rendimentoDaCarteira | currency: 'BRL'}} Parabéns</h3>
+    </div>
+    <div *ngIf="carteira.rendimentoDaCarteira < 0">
+     <h3> Ops, as coisas não vão muito bem. Sua carteira rendeu {{ carteira.rendimentoDaCarteira | currency: 'BRL'}} </h3>
+    </div>
+  </mat-card>
+
+    <mat-card class="col-md-7 mt-4 ">
+     <h3> Seus Investimentos</h3>
+      <mat-tab-group>
+        <mat-tab label="Renda Variavel" *ngIf="carteira.valorTotalRendaVariavel>0"><app-listagem-simples-renda-variavel></app-listagem-simples-renda-variavel> 
+          <button mat-button color="primary" routerLink= "/rendaVariavel" class="mt-2">Veja mais</button></mat-tab>
+        <mat-tab label="Renda Fixa" *ngIf="carteira.valorTotalRendaFixa>0"> <app-listagem-simples-renda-fixa></app-listagem-simples-renda-fixa>  
+          <button mat-button color="primary" routerLink= "/rendaFixa" class="mt-2">Veja mais</button></mat-tab>
+        <mat-tab label="Tesouro Direto"*ngIf="carteira.valorTotalTesouroDireto>0"> <app-listagem-simples-tesouro-direto></app-listagem-simples-tesouro-direto>
+          <button mat-button color="primary" routerLink= "/tesouroDireto" class="mt-2">Veja mais</button> </mat-tab>
+        <mat-tab label="Poupança"*ngIf="carteira.valorTotalPoupanca>0"> <app-listagem-simples-poupanca></app-listagem-simples-poupanca> 
+          <button mat-button color="primary" routerLink= "/poupanca" class="mt-2">Veja mais</button></mat-tab>
+      </mat-tab-group>
+    </mat-card>
+    <mat-card class="col-md-5 mt-4 ">
+      <google-chart 
+    [type]="chartData.type" 
+    [data]="chartData.data" 
+    [title]="chartData.title"
+    [columns]="chartData.columnNames" 
+    [options]="chartData.options" 
+    [width]="chartData.width"
+    [height]="chartData.height">
+      
+</google-chart>
+    </mat-card>
+  </div>
+</div>
